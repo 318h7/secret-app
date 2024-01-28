@@ -1,0 +1,13 @@
+{
+    "form": {
+        "title": "Login",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Submit",
+        "errors": {
+            "username_required": "Username is required.",
+            "password_required": "Password is required.",
+            "login_error": "Invalid username or password."
+        }
+    }
+}

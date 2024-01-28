@@ -8,6 +8,10 @@ Based on the vite `react-ts` template
 Use `npm run dev` to run the app with HMR
 Use `npm run preview` to launch a demo production build
 
+## Linting
+
+Use `npm run lint` to run the linter
+
 ## Testing
 TODO
 

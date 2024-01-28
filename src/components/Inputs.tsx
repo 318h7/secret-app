@@ -1,16 +1,22 @@
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components'
 
-export const Input = styled.input`
+interface CustomInputProps {
+  readonly $isError?: boolean;
+}
+
+type InputProps = InputHTMLAttributes<HTMLInputElement> & CustomInputProps;
+
+export const Input = styled.input<InputProps>`
     border-radius: 3px;
-    border: ${({ theme }) => `1px solid ${theme.main}`};
+    border: ${({ theme: { colors }, $isError }) => `1px solid ${$isError ? colors.error : colors.main}`};
     display: block;
     margin: 0 0 1em;
     padding: 1rem;
   
     ::placeholder {
-      color: ${({theme}) => theme.text};
+      color: ${({theme: { colors }}) => colors.text};
     }
   `
 
-export const PasswordInput = (props: InputHTMLAttributes<HTMLInputElement>) => <Input {...props} type="password" />;
+export const PasswordInput = (props: InputProps) => <Input {...props} type="password" />;
