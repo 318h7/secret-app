@@ -1,3 +1,4 @@
+import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components'
 
 export const Input = styled.input`
@@ -12,4 +13,4 @@ export const Input = styled.input`
     }
   `
 
-export const PasswordInput = (props: object) => <Input {...props} type="password" />;
+export const PasswordInput = (props: InputHTMLAttributes<HTMLInputElement>) => <Input {...props} type="password" />;

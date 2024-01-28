@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const AppStyles = createGlobalStyle`
-  body {
+  body, div {
     margin: 0;
   }
 `
