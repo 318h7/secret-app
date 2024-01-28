@@ -1,3 +1,4 @@
 export const theme = {
-    main: "mediumseagreen"
+    main: "#b1eb21",
+    text: "#232423",
 };
