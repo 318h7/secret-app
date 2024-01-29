@@ -31,8 +31,14 @@ export const Login =  () => {
         if ('token' in response) {
             localStorage.setItem(TOKEN_KEY, response.token);
             redirect(PAGES.SERVERS);
-        } else if ('message' in response && response.message === UNAUTHORIZED) {
-            setError(t("form.errors.login"));
+        } else if ('message' in response) {
+            switch (response.message) {
+                case UNAUTHORIZED:
+                    setError(t("form.errors.login"));
+                    break;
+                default:
+                    setError(t("form.errors.unknown"));
+            }
         }
     });
 

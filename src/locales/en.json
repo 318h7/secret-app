@@ -10,7 +10,8 @@
         "errors": {
             "username": "Username is required.",
             "password": "Password is required.",
-            "login": "Invalid username or password."
+            "login": "Invalid username or password.",
+            "unknown": "Something went wrong. Please try again later."
         }
     }
 }
