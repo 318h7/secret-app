@@ -4,7 +4,11 @@
     },
     "servers": {
         "title": "Servers List",
-        "empty": "No servers found."
+        "table": {
+            "empty": "No servers found.",
+            "name": "Location",
+            "distance": "Distance"
+        }
     },
     "form": {
         "title": "Login",

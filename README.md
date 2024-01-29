@@ -22,10 +22,8 @@ Internationalization is supported via `i18-next`
 locales are stored in the `./src/locales/`
 
 ## Extra
-
-* Store login token in local storage
-* Use context provider for the token and create protected route
-* Add servers page logic
+* Create protected route
 * Theme is half-baked
 * Responsiveness
+* Add loading indications
 * Tests test tests...
