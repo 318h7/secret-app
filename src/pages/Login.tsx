@@ -19,9 +19,9 @@ export const Login =  () => {
     const { t } = useTranslation();
     const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
 
-    const onSubmit = (data: FormFields) => {
+    const onSubmit = handleSubmit((data: FormFields) => {
         console.log(data);
-    };
+    });
 
     return (
         <>

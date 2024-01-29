@@ -15,7 +15,7 @@ export const Input = styled.input<InputProps>`
     padding: 1rem;
   
     ::placeholder {
-      color: ${({theme: { colors }}) => colors.text};
+      color: ${({theme: { colors }}) => colors.dark};
     }
 
     &:focus {
@@ -24,3 +24,4 @@ export const Input = styled.input<InputProps>`
   `
 
 export const PasswordInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => <Input {...props} ref={ref} type="password" />);
+PasswordInput.displayName = 'PasswordInput';
