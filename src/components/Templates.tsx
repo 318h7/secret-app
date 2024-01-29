@@ -9,5 +9,6 @@ export const Layout = styled.div`
 export const Card = styled.div`
     padding: 1.5rem;
     border-radius: 16px;
-    box-shadow: ${({ theme: { colors } }) => `2px 2px 4px ${colors.text}`};
+    box-shadow: ${({ theme: { elevation } }) => elevation.low};
+    background-color: ${({ theme: { colors } }) => colors.light};
 `

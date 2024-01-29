@@ -13,7 +13,6 @@ const Error = styled.div`
     color: ${({ theme: { colors } }) => colors.error};
     font-size: 0.8rem;
     min-height: 1.5rem;
-    margin-bottom: 0.5rem;
 `
 
 export const Login =  () => {
@@ -25,25 +24,28 @@ export const Login =  () => {
     };
 
     return (
-        <Card>
-            <h2>{t("form.title")}</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                    {...register("username", { required: t("form.errors.username") })}
-                    placeholder={t("form.username")}
-                    $isError={Boolean(errors?.username)}
-                />
-                <Error>{errors?.username?.message}</Error>
-                <PasswordInput
-                    {...register("password", { required: t("form.errors.password") })}
-                    placeholder={t("form.password")}
-                    $isError={Boolean(errors?.password)}
-                />
-                <Error>{errors?.password?.message}</Error>
-                <div>
-                    <Button type="submit">{t("form.submit")}</Button>
-                </div>
-            </form>
-        </Card> 
+        <>
+            <h1>{t("login.title")}</h1>
+            <Card>
+                <h2>{t("form.title")}</h2>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Input
+                        {...register("username", { required: t("form.errors.username") })}
+                        placeholder={t("form.username")}
+                        $isError={Boolean(errors?.username)}
+                    />
+                    <Error>{errors?.username?.message}</Error>
+                    <PasswordInput
+                        {...register("password", { required: t("form.errors.password") })}
+                        placeholder={t("form.password")}
+                        $isError={Boolean(errors?.password)}
+                    />
+                    <Error>{errors?.password?.message}</Error>
+                    <div>
+                        <Button type="submit">{t("form.submit")}</Button>
+                    </div>
+                </form>
+            </Card>
+        </>
     );
 }

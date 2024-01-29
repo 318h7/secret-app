@@ -1,4 +1,7 @@
 {
+    "login": {
+        "title": "NordLayer Interview App"
+    },
     "form": {
         "title": "Login",
         "username": "Username",
