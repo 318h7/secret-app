@@ -8,14 +8,15 @@ import { queryClient } from "./model/client";
 import { Servers, Login } from "./pages";
 import { theme, GlobalStyles } from "./styles";
 import { Layout } from "./components";
+import { PAGES } from "./constants";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: PAGES.ROOT,
     element: <Login />,
   },
   {
-    path: "/servers",
+    path: PAGES.SERVERS,
     element: <Servers />,
   },
 ]);

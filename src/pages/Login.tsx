@@ -1,7 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { Card, Button, Input, PasswordInput, FormField } from "../components"
+import { Card, Button, Input, PasswordInput, FormField, Error } from "../components"
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { postData } from "../rest";
+import { redirect } from "react-router-dom";
+import { PAGES, TOKEN_KEY } from "../constants";
+import { useState } from "react";
 
 interface FormFields {
     username: string;
@@ -10,15 +14,26 @@ interface FormFields {
 
 const ContainedCard = styled(Card)`
     max-width: 600px; 
-;
 `;
+
+const UNAUTHORIZED = "Unauthorized";
+
+type Response = { message: string } | { token: string };
 
 export const Login =  () => {
     const { t } = useTranslation();
     const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
-
-    const onSubmit = handleSubmit((data: FormFields) => {
-        console.log(data);
+    const [error, setError] = useState<string | null>(null);
+    const onSubmit = handleSubmit(async (data: FormFields) => {
+        setError(null);
+        const response = await postData<Response, FormFields>("/tokens", data);
+        
+        if ('token' in response) {
+            localStorage.setItem(TOKEN_KEY, response.token);
+            redirect(PAGES.SERVERS);
+        } else if ('message' in response && response.message === UNAUTHORIZED) {
+            setError(t("form.errors.login"));
+        }
     });
 
     return (
@@ -41,6 +56,7 @@ export const Login =  () => {
                             $isError={Boolean(errors?.password)}
                         />
                     </FormField>
+                    {error ? <Error>{error}</Error> : null}
                     <div>
                         <Button type="submit">{t("form.submit")}</Button>
                     </div>

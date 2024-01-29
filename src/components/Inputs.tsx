@@ -7,7 +7,7 @@ interface CustomInputProps {
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & CustomInputProps;
 
-const Error = styled.div`
+export const Error = styled.div`
     color: ${({ theme: { colors } }) => colors.error};
     font-size: 0.8rem;
     min-height: 1.5rem;
