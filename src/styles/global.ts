@@ -24,6 +24,39 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
 
+  button {
+    padding: 0.5rem;
+    background-color: ${({ theme }) => theme.colors.main};
+    border: none;
+    box-shadow: ${({ theme: { elevation } }) => elevation.low};
+    font-weight: bold;
+
+    &:hover {
+      filter: brightness(95%);
+    }
+    &:active {
+      box-shadow: ${({ theme: { elevation } }) => elevation.ground};
+    }
+  }
+
+  input {
+    box-shadow: inset 1px 1px 2px ${({ theme: { colors } }) => colors.grey};
+    border-radius: 8px;
+    border: 1px solid ${({ theme: { colors } }) => colors.main};
+    display: block;
+    margin: 0 0 0.5rem;
+    padding: 1rem;
+  
+    ::placeholder {
+      color: ${({theme: { colors }}) => colors.dark};
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  
   
   h1 {
     display: block;
@@ -33,6 +66,7 @@ export const GlobalStyles = createGlobalStyle`
     margin-inline-start: 0;
     margin-inline-end: 0px;
     font-weight: bold;
+    text-align: center;
     color: ${({ theme }) => theme.colors.light};
   }
 

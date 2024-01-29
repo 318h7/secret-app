@@ -5,13 +5,16 @@ const COLORS = {
     dark: "#242424",
     light: "#fff",
     error: "#ff3333",
-    bg: "rgba(0,0, 39, 0.8)",
+    bg: "rgba(0, 0, 39, 0.8)",
+    grey: "rgba(0, 0, 0, 0.6)",
 } as const;
 
 
 export const theme: DefaultTheme = {
     elevation:{
-        low: `4px 4px 8px ${COLORS.dark}`
+        ground: `1px 1px 2px ${COLORS.dark}`,
+        low: `2px 2px 2px ${COLORS.dark}`,
+        high: `4px 4px 8px ${COLORS.dark}`
     },
     colors: COLORS,
     borderRadius: "4px",

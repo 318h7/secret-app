@@ -5,7 +5,9 @@ declare module 'styled-components' {
     borderRadius: string;
 
     elevation: {
+      ground: string;
       low: string;
+      high: string;
     },
     colors: {
       main: string;
@@ -13,6 +15,7 @@ declare module 'styled-components' {
       light: string;
       bg: string;
       error: string;
+      grey: string;
     };
   }
 }

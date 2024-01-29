@@ -7,21 +7,28 @@ interface CustomInputProps {
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & CustomInputProps;
 
-export const Input = styled.input<InputProps>`
-    border-radius: 8px;
-    border: ${({ theme: { colors }, $isError }) => `1px solid ${$isError ? colors.error : colors.main}`};
-    display: block;
-    margin: 0 0 0.5rem;
-    padding: 1rem;
-  
-    ::placeholder {
-      color: ${({theme: { colors }}) => colors.dark};
-    }
+const Error = styled.div`
+    color: ${({ theme: { colors } }) => colors.error};
+    font-size: 0.8rem;
+    min-height: 1.5rem;
+`
 
-    &:focus {
-      outline: none;
-    }
-  `
+export const Input = styled.input<InputProps>`
+  border: ${({ theme: { colors }, $isError }) => `1px solid ${$isError ? colors.error : colors.main}`};
+`;
 
 export const PasswordInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => <Input {...props} ref={ref} type="password" />);
 PasswordInput.displayName = 'PasswordInput';
+
+interface FormFieldProps extends InputProps {
+  error?: string;
+}
+export const FormField = 
+  ({ error, children }: FormFieldProps) => (
+  <>
+    {children}
+    <Error>{error}</Error>
+  </>
+  )
+
+FormField.displayName = 'FormField';
