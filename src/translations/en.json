@@ -5,9 +5,9 @@
         "password": "Password",
         "submit": "Submit",
         "errors": {
-            "username_required": "Username is required.",
-            "password_required": "Password is required.",
-            "login_error": "Invalid username or password."
+            "username": "Username is required.",
+            "password": "Password is required.",
+            "login": "Invalid username or password."
         }
     }
 }

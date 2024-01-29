@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { Card, Form, Button, Input, PasswordInput } from "../components"
-import { object, string } from 'yup';
-import { ChangeEvent, useState } from "react";
-import type { FormErrors } from "../components";
+import { Card, Button, Input, PasswordInput } from "../components"
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
 
 
 interface FormFields {
@@ -10,49 +9,41 @@ interface FormFields {
     password: string;
 }
 
+const Error = styled.div`
+    color: ${({ theme: { colors } }) => colors.error};
+    font-size: 0.8rem;
+    min-height: 1.5rem;
+    margin-bottom: 0.5rem;
+`
+
 export const Login =  () => {
     const { t } = useTranslation();
-    const [errors, setErrors] = useState<FormErrors<FormFields>>(undefined);
+    const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
 
-    const handleSubmit = (data: FormFields, isValid: boolean, formErrors: FormErrors<FormFields>) => {
-        if (formErrors) {
-            setErrors(formErrors);
-        }
-        console.log(data, isValid);
+    const onSubmit = (data: FormFields) => {
+        console.log(data);
     };
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const name = event.currentTarget.name as keyof FormFields;
-
-        if (errors !== undefined && errors[name]) {
-            setErrors({ ...errors, [name]: undefined });
-        }
-    }
-
-    const loginSchema = object({
-        username: string()
-            .required(t("form.errors.username_required")),
-        password: string()
-            .required(t("form.errors.password_required"))
-    });
 
     return (
         <Card>
-            <Form<FormFields> onSubmit={handleSubmit} schema={loginSchema}>
+            <h2>{t("form.title")}</h2>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Input
-                    name="username"
-                    onChange={handleChange}
+                    {...register("username", { required: t("form.errors.username") })}
                     placeholder={t("form.username")}
                     $isError={Boolean(errors?.username)}
                 />
+                <Error>{errors?.username?.message}</Error>
                 <PasswordInput
-                    name="password"
-                    onChange={handleChange}
+                    {...register("password", { required: t("form.errors.password") })}
                     placeholder={t("form.password")}
                     $isError={Boolean(errors?.password)}
                 />
-                <Button type="submit">{t("form.submit")}</Button>
-            </Form>
+                <Error>{errors?.password?.message}</Error>
+                <div>
+                    <Button type="submit">{t("form.submit")}</Button>
+                </div>
+            </form>
         </Card> 
     );
 }
