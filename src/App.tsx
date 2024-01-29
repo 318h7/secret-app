@@ -10,7 +10,7 @@ import { theme, GlobalStyles } from "./styles";
 import { Layout } from "./components";
 import { PAGES } from "./constants";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: PAGES.ROOT,
     element: <Login />,
@@ -23,12 +23,12 @@ const router = createBrowserRouter([
 
 const App = () => (
     <ThemeProvider theme={theme}>
-        <GlobalStyles/>
-        <QueryClientProvider client={queryClient}>
-          <Layout>
-            <RouterProvider router={router} />
-          </Layout>
-        </QueryClientProvider>
+      <GlobalStyles/>
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <RouterProvider router={router} />
+        </Layout>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 
