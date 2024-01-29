@@ -1,10 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { Card } from "../components";
+import { useServersQuery } from "../model";
+import styled from "styled-components";
 
-const getServers = () => ["server", "server2"];
-
+const Heading = styled.h2`
+    color: ${({ theme: { colors }}) => colors.dark};
+`;
 export const Servers = () => {
-    const servers = useQuery({ queryKey: ['todos'], queryFn: getServers })
-    console.log(servers.data);
+    const { data, isLoading } = useServersQuery();
+    const { t } = useTranslation();
+    const isEmpty = data?.length == 0;
 
-    return <div>Servers world!</div>
+    console.log(isLoading);
+    return (
+        <Card>
+            <Heading>{t('servers.title')}</Heading>
+            {isEmpty ? t('servers.empty') : null }
+        </Card>
+    )
 }

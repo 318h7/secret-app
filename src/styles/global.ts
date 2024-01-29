@@ -6,7 +6,7 @@ export const GlobalStyles = createGlobalStyle`
     line-height: 1.5;
     font-weight: 400;
 
-    background-color: ${({ theme }) => theme.colors.bg};
+    background-color: ${({ theme: { colors } }) => colors.bg};
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -26,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
 
   button {
     padding: 0.5rem;
-    background-color: ${({ theme }) => theme.colors.main};
+    background-color: ${({ theme: { colors } }) => colors.main};
     border: none;
     box-shadow: ${({ theme: { elevation } }) => elevation.low};
     font-weight: bold;
@@ -48,7 +48,7 @@ export const GlobalStyles = createGlobalStyle`
     padding: 1rem;
   
     ::placeholder {
-      color: ${({theme: { colors }}) => colors.dark};
+      color: ${({theme: { colors } }) => colors.dark};
     }
 
     &:focus {
@@ -56,8 +56,6 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  
-  
   h1 {
     display: block;
     font-size: 2rem;
@@ -67,7 +65,7 @@ export const GlobalStyles = createGlobalStyle`
     margin-inline-end: 0px;
     font-weight: bold;
     text-align: center;
-    color: ${({ theme }) => theme.colors.light};
+    color: ${({ theme: { colors }}) => colors.light};
   }
 
   h2 {

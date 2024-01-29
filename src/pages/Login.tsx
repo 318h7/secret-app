@@ -16,6 +16,13 @@ const ContainedCard = styled(Card)`
     max-width: 600px; 
 `;
 
+const ButtonContainer = styled.div`
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    allign-items: center;
+`;
+
 const UNAUTHORIZED = "Unauthorized";
 
 export const Login =  () => {
@@ -40,6 +47,9 @@ export const Login =  () => {
         }
     });
 
+    // TODO: Get rig of custom error state
+    //console.log(error);
+
     const onSubmit = handleSubmit((data) => mutate(data));
 
     return (
@@ -63,9 +73,9 @@ export const Login =  () => {
                         />
                     </FormField>
                     {error ? <Error>{err}</Error> : null}
-                    <div>
+                    <ButtonContainer>
                         <Button type="submit">{t("form.submit")}</Button>
-                    </div>
+                    </ButtonContainer>
                 </form>
             </ContainedCard>
         </>

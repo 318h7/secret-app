@@ -10,7 +10,7 @@ import { theme, GlobalStyles } from "./styles";
 import { Layout } from "./components";
 import { PAGES } from "./constants";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: PAGES.ROOT,
     element: <Login />,

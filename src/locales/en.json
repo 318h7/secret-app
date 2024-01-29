@@ -2,6 +2,10 @@
     "login": {
         "title": "NordLayer Interview App"
     },
+    "servers": {
+        "title": "Servers List",
+        "empty": "No servers found."
+    },
     "form": {
         "title": "Login",
         "username": "Username",

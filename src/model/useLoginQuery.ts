@@ -23,6 +23,5 @@ interface Parameters {
 export const useLoginQuery = ({ onSuccess, onError }: Parameters = {}) => useMutation<Response, Error, LoginData>({
     onSuccess,
     onError,
-    throwOnError: false,
     mutationFn: (data: LoginData) => axios.post('/tokens', data)
 })
