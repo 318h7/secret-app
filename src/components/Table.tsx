@@ -3,21 +3,26 @@ import styled from "styled-components";
 
 const TableContainer = styled.div`
     border: 1px solid ${({ theme: { colors } }) => colors.dark};
-    border-radius: ${({ theme: { borderRadius } }) => borderRadius};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    max-height: 680px;
+    overflow-y: auto;
+    overflow-x: hidden;
 `;
 
 const Header = styled.div`
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
-    
+
+    background: ${({ theme: { colors } }) => colors.main};
     border-bottom: 1px solid ${({ theme: { colors } }) => colors.dark};
 
     :not(:last-child) {
@@ -32,44 +37,28 @@ export const Row = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
-`;
 
-const Body = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    max-height: 680px;
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    ${Row}:not(:last-child) {
-        border-bottom: 1px solid ${({ theme: { colors } }) => colors.dark};
-    }
-
-    :not(:last-child) {
-        justify-content: flex-end;
-        border-right: 1px solid ${({ theme: { colors } }) => colors.dark};
-    }
-
-    :last-child {
-        justify-content: flex-start;
+    &:nth-child(odd) {
+        background: ${({ theme: { colors } }) => colors.lightGrey};
     }
 `;
 
-export const BodyItem = styled.div`
+const getAlignment = (left?: boolean, right?: boolean) => {
+    if (left) return "flex-start";
+    if (right) return "flex-end";
+    return "center";
+};
+
+export const Column = styled.div<{ $left?: boolean, $right?: boolean }>`
     display: flex;
-    justify-content: center;
+    justify-content: ${({ $left, $right }) => getAlignment($left, $right)};
     align-items: center;
     width: 100%;
     height: 100%;
     padding: 0.5rem 1rem;
 `;
 
-export const HeaderItem = styled.div`
+export const HeaderColumn = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,7 +77,7 @@ export const Table = ({ headers, children }: TableProps) => {
     return (
         <TableContainer>
             <Header>{headers}</Header>
-            <Body>{children}</Body>
+            {children}
         </TableContainer>
     );
 };

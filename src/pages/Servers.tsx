@@ -1,11 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { Card, Table, Row, BodyItem, HeaderItem } from "../components";
+import { Card, Table, Row, Column, HeaderColumn } from "../components";
 import { useServersQuery } from "../model";
 import styled from "styled-components";
 
 const Heading = styled.h2`
     color: ${({ theme: { colors }}) => colors.dark};
 `;
+
 export const Servers = () => {
     const { data, isLoading } = useServersQuery();
     const { t } = useTranslation();
@@ -15,17 +16,17 @@ export const Servers = () => {
     return (
         <Card>
             <Heading>{t('servers.title')}</Heading>
-            {isEmpty ? t('servers.table.empty') : null }
             <Table headers={[
-                <HeaderItem key="name">{t('servers.table.name')}</HeaderItem>,
-                <HeaderItem key="distance">{t('servers.table.distance')}</HeaderItem>
+                <HeaderColumn key="name">{t('servers.table.name')}</HeaderColumn>,
+                <HeaderColumn key="distance">{t('servers.table.distance')}</HeaderColumn>
             ]}>
                 {data?.map(({  name, distance }, index) => (
                     <Row key={index}>
-                        <BodyItem>{name}</BodyItem>
-                        <BodyItem>{distance}</BodyItem>
+                        <Column $right>{name}</Column>
+                        <Column $left>{distance}</Column>
                     </Row>
                 ))}
+                {isEmpty ? <Row><Column>{t('servers.table.empty')}</Column></Row> : null }
             </Table>
         </Card>
     )

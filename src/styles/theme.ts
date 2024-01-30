@@ -7,6 +7,7 @@ const COLORS = {
     error: "#ff3333",
     bg: "rgba(0, 0, 39, 0.8)",
     grey: "rgba(0, 0, 0, 0.6)",
+    lightGrey: "rgba(0, 0, 0, 0.2)",
 } as const;
 
 
