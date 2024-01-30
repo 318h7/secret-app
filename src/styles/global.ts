@@ -7,6 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 400;
 
     background-color: ${({ theme: { colors } }) => colors.bg};
+    color: ${({ theme: { colors }}) => colors.dark};
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

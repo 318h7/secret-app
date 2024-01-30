@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, Ref, forwardRef, useState } from 'react';
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import EyeOn  from "../icons/eye-on.svg?react";
 import EyeOff  from "../icons/eye-off.svg?react";
 import { useTranslation } from 'react-i18next';
@@ -38,6 +38,7 @@ export const Input = styled.input<InputProps>`
 
 export const PasswordInput = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const type = showPassword ? 'text' : 'password';
   const Icon = showPassword ?  EyeOnIcon : EyeOffIcon;
@@ -46,7 +47,13 @@ export const PasswordInput = forwardRef((props: InputProps, ref: Ref<HTMLInputEl
   return (
     <RelativeBox>
       <Input {...props} ref={ref} type={type} />
-      <Icon aria-label={label} width={16} onClick={() => setShowPassword(!showPassword)} />
+      <Icon
+        fill={colors.dark}
+        stroke={colors.dark}
+        aria-label={label}
+        width={16}
+        onClick={() => setShowPassword(!showPassword)}
+      />
     </RelativeBox>
 
   );
