@@ -10,7 +10,6 @@ const COLORS = {
     lightGrey: "rgba(0, 0, 0, 0.1)",
 } as const;
 
-
 export const theme: DefaultTheme = {
     elevation:{
         ground: `1px 1px 2px ${COLORS.dark}`,

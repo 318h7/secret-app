@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -41,26 +41,25 @@ const UNAUTHORIZED = "Unauthorized";
 export const Login =  () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
-    const [err, setError] = useState<string | null>(null);
-    const { mutate, error, isPending } = useLoginQuery({
+    const { register, handleSubmit, formState: { errors: formErrors } } = useForm<FormFields>();
+    const { mutate, error, isPending, isError } = useLoginQuery({
         onSuccess: ({ data: { token }}) => {
             localStorage.setItem(TOKEN_KEY, token);
             navigate(PAGES.SERVERS); 
-        },
-        onError: (error) => {
-            switch (error?.response?.data.message) {
-                case UNAUTHORIZED:
-                    setError(t("form.errors.login"));
-                    break;
-                default:
-                    setError(t("form.errors.unknown"));
-            }
         }
     });
+    
+    const errorMessage = useMemo(() => {
+        if (!isError) return null;
 
-    // TODO: Get rig of custom error state
-    //console.log(error);
+        const errorMessage = error?.response?.data?.message ?? error?.message;
+
+        if (errorMessage === UNAUTHORIZED) return t("form.errors.login");
+        if (errorMessage) return errorMessage;
+
+        return t("form.errors.unknown");
+    }, [error, isError, t]);
+
 
     const onSubmit = handleSubmit((data) => mutate(data));
 
@@ -70,21 +69,21 @@ export const Login =  () => {
             <ContainedCard>
                 <h2>{t("form.title")}</h2>
                 <form onSubmit={onSubmit}>
-                    <FormField error={errors?.username?.message}>
+                    <FormField error={formErrors?.username?.message}>
                         <Input
                             {...register("username", { required: t("form.errors.username") })}
                             placeholder={t("form.username")}
-                            $isError={Boolean(errors?.username)}
+                            $isError={Boolean(formErrors?.username)}
                         />
                     </FormField>
-                    <FormField error={errors?.password?.message}>
+                    <FormField error={formErrors?.password?.message}>
                         <PasswordInput
                             {...register("password", { required: t("form.errors.password") })}
                             placeholder={t("form.password")}
-                            $isError={Boolean(errors?.password)}
+                            $isError={Boolean(formErrors?.password)}
                         />
                     </FormField>
-                    {error ? <Error>{err}</Error> : null}
+                    {errorMessage ? <Error>{errorMessage}</Error> : null}
                     <ButtonContainer>
                         <Button type="submit">
                             {t("form.submit")}

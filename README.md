@@ -22,8 +22,7 @@ Internationalization is supported via `i18-next`
 locales are stored in the `./src/locales/`
 
 ## Extra
+* Table sorting
 * Create protected route
-* Theme is half-baked
 * Responsiveness
-* Add loading indications
 * Tests test tests...
