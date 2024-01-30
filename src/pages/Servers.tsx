@@ -1,18 +1,38 @@
 import { useTranslation } from "react-i18next";
 import { Card, Table, Row, Column, HeaderColumn } from "../components";
 import { useServersQuery } from "../model";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
+import Loader  from "../icons/loader.svg?react";
 
 const Heading = styled.h2`
     color: ${({ theme: { colors }}) => colors.dark};
 `;
 
+interface NoDataRowProps {
+    isEmpty: boolean;
+    isLoading: boolean;
+}
+
+const NoDataRow = ({ isEmpty, isLoading }: NoDataRowProps) => {
+    const { t } = useTranslation();
+    const { colors } = useTheme();
+
+    if (!isEmpty) return null;
+
+    return (
+        <Row>
+            <Column>
+                {isLoading ? <Loader fill={colors.main} width={40} /> : t('servers.table.empty')}
+            </Column>
+        </Row>
+    )
+}
+
 export const Servers = () => {
     const { data, isLoading } = useServersQuery();
     const { t } = useTranslation();
-    const isEmpty = data?.length == 0;
+    const isEmpty = !data || data?.length == 0;
 
-    console.log(isLoading);
     return (
         <Card>
             <Heading>{t('servers.title')}</Heading>
@@ -26,7 +46,7 @@ export const Servers = () => {
                         <Column $left>{distance}</Column>
                     </Row>
                 ))}
-                {isEmpty ? <Row><Column>{t('servers.table.empty')}</Column></Row> : null }
+                <NoDataRow isEmpty={isEmpty} isLoading={isLoading} />
             </Table>
         </Card>
     )

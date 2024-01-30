@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const TableContainer = styled.div`
     border: 1px solid ${({ theme: { colors } }) => colors.dark};
+    box-shadow: inset 1px -1px 0 ${({ theme: { colors } }) => colors.grey};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -24,6 +25,7 @@ const Header = styled.div`
 
     background: ${({ theme: { colors } }) => colors.main};
     border-bottom: 1px solid ${({ theme: { colors } }) => colors.dark};
+    box-shadow: 0px 0px 4px ${({ theme: { colors } }) => colors.dark};
 
     :not(:last-child) {
         border-right: 1px solid ${({ theme: { colors } }) => colors.dark};
