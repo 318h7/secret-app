@@ -25,6 +25,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   button {
+    border-radius: ${({ theme }) => theme.borderRadius};
     padding: 0.5rem;
     background-color: ${({ theme: { colors } }) => colors.main};
     border: none;

@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Card, Button, Input, PasswordInput, FormField, Error } from "../components"
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+
 import { PAGES, TOKEN_KEY } from "../constants";
-import { useState } from "react";
 import { useLoginQuery } from "../model";
+import { Card, Input, PasswordInput, FormField, Error } from "../components"
+
+import Loader  from "../icons/loader.svg?react";
 
 interface FormFields {
     username: string;
@@ -13,16 +16,26 @@ interface FormFields {
 }
 
 const ContainedCard = styled(Card)`
-    max-width: 600px; 
+    max-width: 600px;
 `;
 
 const ButtonContainer = styled.div`
     margin-top: 1rem;
     display: flex;
     justify-content: flex-start;
-    allign-items: center;
+    align-items: center;
 `;
 
+const LoaderWithMargin = styled(Loader)`
+    margin-left: 0.5rem;
+    margin-right: -8px;
+`;
+
+export const Button = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 const UNAUTHORIZED = "Unauthorized";
 
 export const Login =  () => {
@@ -30,8 +43,7 @@ export const Login =  () => {
     const { t } = useTranslation();
     const { register, handleSubmit, formState: { errors } } = useForm<FormFields>();
     const [err, setError] = useState<string | null>(null);
-    // TODO: use isPending to show a loading indicator
-    const { mutate, error  } = useLoginQuery({
+    const { mutate, error, isPending } = useLoginQuery({
         onSuccess: ({ data: { token }}) => {
             localStorage.setItem(TOKEN_KEY, token);
             navigate(PAGES.SERVERS); 
@@ -74,7 +86,10 @@ export const Login =  () => {
                     </FormField>
                     {error ? <Error>{err}</Error> : null}
                     <ButtonContainer>
-                        <Button type="submit">{t("form.submit")}</Button>
+                        <Button type="submit">
+                            {t("form.submit")}
+                            {isPending ? <LoaderWithMargin height={24} width={24} /> : null}
+                        </Button>
                     </ButtonContainer>
                 </form>
             </ContainedCard>
