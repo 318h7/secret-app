@@ -1,12 +1,10 @@
-name: Nord Layer Homework Pipeline
-run-name: ${{ github.actor }} triggered build 🚀
+name: Lint and Test
+run-name: Master push CI
 on: [push]
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
-    concurrency:
-      group: check
-      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,10 +15,8 @@ jobs:
       - name: Lint
         run: npm run lint
   test:
+    name: Test
     runs-on: ubuntu-latest
-    concurrency:
-      group: check
-      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
