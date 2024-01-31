@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Card, Table, Row, Column, HeaderCell } from "../components";
-import { ServerSorting, useServersQuery } from "../model";
 import { useTheme } from "styled-components";
+
+import { Card, Table, Row, Column, HeaderCell } from "../components";
+import { SortAction, useServersQuery } from "../model";
 import Loader from "../icons/loader.svg?react";
 import { SORT } from "../constants";
-import { useState } from "react";
 
 interface NoDataRowProps {
     isEmpty: boolean;
@@ -26,13 +27,14 @@ const NoDataRow = ({ isEmpty, isLoading }: NoDataRowProps) => {
     )
 }
 
+
 export const Servers = () => {
-    const [sorting, setSorting] = useState<ServerSorting>({ name: SORT.NONE, distance: SORT.NONE});
+    const [sorting, setSorting] = useState<SortAction>();
     const { data, isLoading } = useServersQuery(sorting);
     const { t } = useTranslation();
     const isEmpty = !data || data?.length == 0;
     const onSortingChanged = (name: string) => (value: SORT) => {
-        setSorting(current => ({ ...current, [name]: value }));
+        setSorting({ name, value });
     };
 
     return (
