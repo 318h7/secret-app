@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "styled-components";
 
 import { Card, Table, Row, Column, HeaderCell } from "../components";
-import { SortAction, useServersQuery } from "../model";
+import { useServersQuery } from "../model";
+import type { SortAction, ServerField } from "../model";
 import Loader from "../icons/loader.svg?react";
 import { SORT } from "../constants";
 
@@ -33,7 +34,7 @@ export const Servers = () => {
     const { data, isLoading } = useServersQuery(sorting);
     const { t } = useTranslation();
     const isEmpty = !data || data?.length == 0;
-    const onSortingChanged = (name: string) => (value: SORT) => {
+    const onSortingChanged = (name: ServerField) => (value: SORT) => {
         setSorting({ name, value });
     };
 

@@ -17,10 +17,12 @@ const distanceDesc = (serverA: Server, serverB: Server) => serverA.distance - se
 const nameDescending = (serverA: Server, serverB: Server) => serverA.name.localeCompare(serverB.name);
 const swapParams = (fn: (a: Server, b: Server) => number) => (a: Server, b: Server) => fn(b, a);
 
+export type ServerField = keyof Server;
 export interface SortAction {
-    name: string;
+    name: ServerField;
     value: SORT;
 }
+
 export const useServersQuery = (sortAction?: SortAction) => {
     const [sorting, setSorting] = useState<SortAction[]>(sortAction ? [sortAction] : []);
     
