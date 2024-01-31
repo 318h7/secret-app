@@ -1,7 +1,7 @@
 # NordLayer interview task
 
 ## React + TypeScript + Vite
-Based on the vite `react-ts` template 
+Based on the vite `react-ts` template
 
 ## Development
 

@@ -11,12 +11,10 @@ export const Error = styled.div`
     min-height: 1.5rem;
 `
 
-export const FormField = 
-({ error, children }: FormFieldProps) => (
-<>
-    {children}
-    <Error>{error}</Error>
-</>
+export const FormField = ({ error, children }: FormFieldProps) => (
+    <>
+        {children}
+        <Error>{error}</Error>
+    </>
 )
-
 FormField.displayName = 'FormField';

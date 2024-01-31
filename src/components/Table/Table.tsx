@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { SORT } from "../../constants";
-import { getNextSorting } from "./unit";
+import { getNextSorting } from "./util";
 import { HColumn, Header, SortIcon, TableContainer } from "./styled";
 
 interface HeaderCellProps {

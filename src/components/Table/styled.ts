@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { SORT } from "../../constants";
 import Triangle from "../../icons/triangle.svg?react";
-import { getAlignment } from "./unit";
+import { getAlignment } from "./util";
 
 export const TableContainer = styled.div`
     border: 1px solid ${({ theme: { colors } }) => colors.dark};
