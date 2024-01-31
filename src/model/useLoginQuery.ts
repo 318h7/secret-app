@@ -1,16 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
 import type { MutateOptions } from "@tanstack/react-query";
-
+import { AxiosError, AxiosResponse } from "axios";
 
 import axios from "./rest";
-import { AxiosError, AxiosResponse } from "axios";
 
 interface Data { token: string }
 interface Message { message: string }
 type Error = AxiosError<Message>;
 type Response = AxiosResponse<Data>;
 
-interface LoginData {
+export interface LoginData {
     username: string;
     password: string;
 }

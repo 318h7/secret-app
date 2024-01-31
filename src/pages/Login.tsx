@@ -5,15 +5,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { PAGES, TOKEN_KEY } from "../constants";
-import { useLoginQuery } from "../model";
+import { useLoginQuery, LoginData } from "../model";
 import { Card, Input, PasswordInput, FormField, Error } from "../components"
-
 import Loader  from "../icons/loader.svg?react";
-
-interface FormFields {
-    username: string;
-    password: string;
-}
 
 const ContainedCard = styled(Card)`
     max-width: 600px;
@@ -41,7 +35,7 @@ const UNAUTHORIZED = "Unauthorized";
 export const Login =  () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { register, handleSubmit, formState: { errors: formErrors } } = useForm<FormFields>();
+    const { register, handleSubmit, formState: { errors: formErrors } } = useForm<LoginData>();
     const { mutate, error, isPending, isError } = useLoginQuery({
         onSuccess: ({ data: { token }}) => {
             localStorage.setItem(TOKEN_KEY, token);
