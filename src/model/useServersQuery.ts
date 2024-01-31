@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { useQuery } from '@tanstack/react-query'
 
@@ -23,7 +23,7 @@ export interface SortAction {
 }
 export const useServersQuery = (sortAction?: SortAction) => {
     const [sorting, setSorting] = useState<SortAction[]>(sortAction ? [sortAction] : []);
-
+    
     useEffect(() => {
         if (sortAction) {
             setSorting((current) => {
@@ -34,9 +34,8 @@ export const useServersQuery = (sortAction?: SortAction) => {
         }
     }, [sortAction]);
 
-    return useQuery({
-        queryKey: ['servers'],
-        select: ({ data }: AxiosResponse<Data>): Data => {
+    const select = useCallback(
+        ({ data }: AxiosResponse<Data>): Data => {
             const copy = [...data];
 
             if (sorting.every(({ value }) => value === SORT.NONE)) {
@@ -45,17 +44,20 @@ export const useServersQuery = (sortAction?: SortAction) => {
 
             sorting?.forEach(({ name, value }) => {
                 if (name === 'name' && value !== SORT.NONE) {
-                    // console.log('sort by name', value)
                     copy.sort(value === SORT.ASC ? swapParams(nameDescending) : nameDescending);
                 }
                 if (name === 'distance' && value !== SORT.NONE) {
-                    // console.log('sort by distance', value)
                     copy.sort(value === SORT.ASC ? swapParams(distanceDesc) : distanceDesc);
                 }
             });
 
             return copy;
-        },
+        }, [sorting]
+    );
+
+    return useQuery({
+        queryKey: ['servers'],
+        select,
         queryFn: () => axios.get(
             '/servers',
             { headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` }}
