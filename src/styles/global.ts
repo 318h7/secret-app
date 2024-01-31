@@ -42,7 +42,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   input {
-    box-shadow: inset 1px 1px 2px ${({ theme: { colors } }) => colors.grey};
+    box-shadow: inset 1px 1px 2px ${({ theme: { colors } }) => colors.darkGrey};
     border-radius: 8px;
     border: 1px solid ${({ theme: { colors } }) => colors.main};
     display: block;

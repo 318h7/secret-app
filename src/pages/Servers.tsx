@@ -1,12 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { Card, Table, Row, Column, HeaderColumn } from "../components";
-import { useServersQuery } from "../model";
-import styled, { useTheme } from "styled-components";
-import Loader  from "../icons/loader.svg?react";
-
-const Heading = styled.h2`
-    color: ${({ theme: { colors }}) => colors.dark};
-`;
+import { Card, Table, Row, Column, HeaderCell } from "../components";
+import { ServerSorting, useServersQuery } from "../model";
+import { useTheme } from "styled-components";
+import Loader from "../icons/loader.svg?react";
+import { SORT } from "../constants";
+import { useState } from "react";
 
 interface NoDataRowProps {
     isEmpty: boolean;
@@ -29,16 +27,24 @@ const NoDataRow = ({ isEmpty, isLoading }: NoDataRowProps) => {
 }
 
 export const Servers = () => {
-    const { data, isLoading } = useServersQuery();
+    const [sorting, setSorting] = useState<ServerSorting>({ name: SORT.NONE, distance: SORT.NONE});
+    const { data, isLoading } = useServersQuery(sorting);
     const { t } = useTranslation();
     const isEmpty = !data || data?.length == 0;
+    const onSortingChanged = (name: string) => (value: SORT) => {
+        setSorting(current => ({ ...current, [name]: value }));
+    };
 
     return (
         <Card>
-            <Heading>{t('servers.title')}</Heading>
+            <h2>{t('servers.title')}</h2>
             <Table headers={[
-                <HeaderColumn key="name">{t('servers.table.name')}</HeaderColumn>,
-                <HeaderColumn key="distance">{t('servers.table.distance')}</HeaderColumn>
+                <HeaderCell key="name" onSortingChanged={onSortingChanged("name")}>
+                    {t('servers.table.name')}
+                </HeaderCell>,
+                <HeaderCell key="distance" onSortingChanged={onSortingChanged("distance")}>
+                    {t('servers.table.distance')}
+                </HeaderCell>
             ]}>
                 {data?.map(({  name, distance }, index) => (
                     <Row key={index}>

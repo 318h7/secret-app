@@ -1,9 +1,12 @@
-import { ReactNode } from "react";
 import styled from "styled-components";
 
-const TableContainer = styled.div`
+import { SORT } from "../../constants";
+import Triangle from "../../icons/triangle.svg?react";
+import { getAlignment } from "./unit";
+
+export const TableContainer = styled.div`
     border: 1px solid ${({ theme: { colors } }) => colors.dark};
-    box-shadow: inset 1px -1px 0 ${({ theme: { colors } }) => colors.grey};
+    box-shadow: inset 1px -1px 0 ${({ theme: { colors } }) => colors.darkGrey};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -14,7 +17,7 @@ const TableContainer = styled.div`
     overflow-x: hidden;
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
     position: sticky;
     top: 0;
     display: flex;
@@ -32,6 +35,33 @@ const Header = styled.div`
     }
 `;
 
+export const Column = styled.div<{ $left?: boolean, $right?: boolean }>`
+    display: flex;
+    justify-content: ${({ $left, $right }) => getAlignment($left, $right)};
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 1rem;
+`;
+
+export const HColumn = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+`;
+
+export const SortIcon = styled(Triangle)<{ $sort: SORT }>`
+    cursor: pointer;
+    fill: ${({ theme: { colors }, $sort }) => $sort === SORT.NONE ? colors.grey : colors.dark};
+    margin-left: 0.5rem;
+    transform: ${({ $sort }) => $sort === SORT.ASC ? "rotate(180deg)" : "rotate(0deg)"};
+    transition: transform 0.3s ease-in-out;
+`;
+
 export const Row = styled.div`
     display: flex;
     flex-direction: row;
@@ -44,42 +74,3 @@ export const Row = styled.div`
         background: ${({ theme: { colors } }) => colors.lightGrey};
     }
 `;
-
-const getAlignment = (left?: boolean, right?: boolean) => {
-    if (left) return "flex-start";
-    if (right) return "flex-end";
-    return "center";
-};
-
-export const Column = styled.div<{ $left?: boolean, $right?: boolean }>`
-    display: flex;
-    justify-content: ${({ $left, $right }) => getAlignment($left, $right)};
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 0.5rem 1rem;
-`;
-
-export const HeaderColumn = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    font-weight: bold;
-    padding: 0.5rem 1rem;
-`;
-
-interface TableProps {
-    children: ReactNode;
-    headers: ReactNode;
-}
-
-export const Table = ({ headers, children }: TableProps) => {
-    return (
-        <TableContainer>
-            <Header>{headers}</Header>
-            {children}
-        </TableContainer>
-    );
-};

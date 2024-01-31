@@ -6,7 +6,8 @@ const COLORS = {
     light: "#fff",
     error: "#ff3333",
     bg: "rgba(0, 0, 39, 0.8)",
-    grey: "rgba(0, 0, 0, 0.6)",
+    darkGrey: "rgba(0, 0, 0, 0.6)",
+    grey: "rgba(0, 0, 0, 0.4)",
     lightGrey: "rgba(0, 0, 0, 0.1)",
 } as const;
 
