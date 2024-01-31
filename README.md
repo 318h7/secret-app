@@ -1,4 +1,5 @@
 # NordLayer interview task
+![master pipeline](https://github.com/github/318h7/nordlayer-app/workflows/main.yml/badge.svg)
 
 ## React + TypeScript + Vite
 Based on the vite `react-ts` template
@@ -14,7 +15,7 @@ Use `npm run preview` to launch a demo production build
 Use `npm run lint` to run the linter
 
 ### Testing
-TODO
+Use `npm run test` to run the vitest runner
 
 ## Internationalization
 
@@ -24,4 +25,3 @@ locales are stored in the `./src/locales/`
 ## Extra
 * Create protected route
 * Responsiveness
-* Tests test tests...
