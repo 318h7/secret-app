@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import {render, renderHook, RenderHookOptions, RenderOptions} from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 import "./i18n";
 import { ThemeProvider } from 'styled-components';
@@ -19,18 +19,17 @@ const testClient = new QueryClient({
 });
 
 interface ProviderProps {
-  path?: string;
   client?: QueryClient;
 }
 
 // eslint-disable-next-line react/display-name
-const getProviders = ({ path = "/", client = testClient }: ProviderProps) => ({children}: {children: React.ReactNode}) => {
+const getProviders = ({ client = testClient }: ProviderProps) => ({children}: {children: React.ReactNode}) => {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={client}>
-        <MemoryRouter initialEntries={[path]}>
+        <BrowserRouter>
           {children}
-        </MemoryRouter>
+        </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>
   )

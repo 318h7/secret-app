@@ -62,7 +62,7 @@ describe('Login page', () => {
         await waitFor(
             () => expect(localStorage.getItem(TOKEN_KEY)).toBe("TestToken")
         );
-
+        expect(location.pathname).toBe("/servers")
         scope.done();
     });
 
