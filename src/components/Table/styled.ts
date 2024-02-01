@@ -12,9 +12,14 @@ export const TableContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-    max-height: 680px;
     overflow-y: auto;
     overflow-x: hidden;
+    max-height: 720px;
+
+
+    @media ${({ theme: { media } }) => media.md} {
+        max-height: 620px;
+    }
 `;
 
 export const Header = styled.div`

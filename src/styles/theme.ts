@@ -10,6 +10,24 @@ const COLORS = {
     grey: "rgba(0, 0, 0, 0.4)",
     lightGrey: "rgba(0, 0, 0, 0.1)",
 } as const;
+  
+const size = {
+    xs: '400px',
+    sm: '600px',
+    md: '900px',
+    lg: '1280px',
+    xl: '1440px',
+    xxl: '1920px',
+}
+  
+const sizeBreakpoints = {
+    xs: `(max-width: ${size.xs})`,
+    sm: `(max-width: ${size.sm})`,
+    md: `(max-width: ${size.md})`,
+    lg: `(max-width: ${size.lg})`,
+    xl: `(max-width: ${size.xl})`,
+    xxl: `(max-width: ${size.xxl})`,
+}
 
 export const theme: DefaultTheme = {
     elevation:{
@@ -19,4 +37,5 @@ export const theme: DefaultTheme = {
     },
     colors: COLORS,
     borderRadius: "4px",
+    media: sizeBreakpoints
 };

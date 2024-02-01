@@ -1,5 +1,14 @@
 import 'styled-components';
 
+export interface Size {
+  xs: string
+  sm: string
+  md: string
+  lg: string
+  xl: string
+  xxl: string
+}
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     borderRadius: string;
@@ -9,6 +18,7 @@ declare module 'styled-components' {
       low: string;
       high: string;
     },
+    media: Size,
     colors: {
       main: string;
       dark: string;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "styled-components";
+import styled, { css, useTheme } from "styled-components";
 
 import { Card, Table, Row, Column, HeaderCell, HeaderMenu } from "../components";
 import { useServersQuery } from "../model";
@@ -12,6 +12,24 @@ interface NoDataRowProps {
     isEmpty: boolean;
     isLoading: boolean;
 }
+
+interface Width {
+    $w: number;
+}
+
+const adaptiveWidth = css<Width>`
+    @media ${({ theme: { media } }) => media.sm} {
+        width: ${({ $w }) => $w}%;
+    }
+`;
+
+const AdaptiveHeader = styled(HeaderCell)<Width>`
+    ${adaptiveWidth}
+`;
+
+const AdaptiveColumn = styled(Column)<Width>`
+    ${adaptiveWidth}
+`;
 
 const NoDataRow = ({ isEmpty, isLoading }: NoDataRowProps) => {
     const { t } = useTranslation();
@@ -28,7 +46,6 @@ const NoDataRow = ({ isEmpty, isLoading }: NoDataRowProps) => {
     )
 }
 
-
 export const Servers = () => {
     const [sorting, setSorting] = useState<SortAction>();
     const { data, isLoading } = useServersQuery(sorting);
@@ -44,17 +61,17 @@ export const Servers = () => {
                 <h2>{t('servers.title')}</h2>
             </HeaderMenu>
             <Table headers={[
-                <HeaderCell key="name" onSortingChanged={onSortingChanged("name")}>
+                <AdaptiveHeader $w={60} key="name" onSortingChanged={onSortingChanged("name")}>
                     {t('servers.table.name')}
-                </HeaderCell>,
-                <HeaderCell key="distance" onSortingChanged={onSortingChanged("distance")}>
+                </AdaptiveHeader>,
+                <AdaptiveHeader $w={40} key="distance" onSortingChanged={onSortingChanged("distance")}>
                     {t('servers.table.distance')}
-                </HeaderCell>
+                </AdaptiveHeader>
             ]}>
                 {data?.map(({  name, distance }, index) => (
                     <Row key={index}>
-                        <Column $right>{name}</Column>
-                        <Column $left>{distance}</Column>
+                        <AdaptiveColumn $w={60} $right>{name}</AdaptiveColumn>
+                        <AdaptiveColumn $w={40} $left>{distance}</AdaptiveColumn>
                     </Row>
                 ))}
                 <NoDataRow isEmpty={isEmpty} isLoading={isLoading} />
