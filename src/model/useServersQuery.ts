@@ -35,15 +35,13 @@ export const useServersQuery = (sortAction?: SortAction) => {
             });
         }
     }, [sortAction]);
-    console.log("RENDER!");
+
     const select = useCallback(
         ({ data }: AxiosResponse<Data>): Data => {
-            console.log("SELECT!");
 
             const copy = [...data];
 
             if (sorting.length == 0 || sorting.every(({ value }) => value === SORT.NONE)) {
-                console.log('THAT!', data);
                 return data;
             }
 
@@ -55,7 +53,6 @@ export const useServersQuery = (sortAction?: SortAction) => {
                     copy.sort(value === SORT.ASC ? swapParams(distanceDesc) : distanceDesc);
                 }
             });
-            console.log('THIS!');
 
             return copy;
         }, [sorting]
