@@ -24,7 +24,7 @@ locales are stored in the `./src/locales/`
 
 ## What would I do if I had more time
 * Add more tests
-* Make more reusable components
+* Make components more reusable 
 * Improve the style system
 
 ### Excuses excuses...

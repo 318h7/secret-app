@@ -23,7 +23,7 @@ interface ProviderProps {
   client?: QueryClient;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components, react/display-name
+// eslint-disable-next-line react/display-name
 const getProviders = ({ path = "/", client = testClient }: ProviderProps) => ({children}: {children: React.ReactNode}) => {
   return (
     <ThemeProvider theme={theme}>
