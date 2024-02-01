@@ -46,8 +46,9 @@ export const PasswordInput = forwardRef((props: InputProps, ref: Ref<HTMLInputEl
 
   return (
     <RelativeBox>
-      <Input {...props} ref={ref} type={type} />
+      <Input {...props} data-testid="password-input" ref={ref} type={type} />
       <Icon
+        data-testid="password-icon"
         fill={colors.dark}
         stroke={colors.dark}
         aria-label={label}

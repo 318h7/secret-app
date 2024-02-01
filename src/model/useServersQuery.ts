@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { expect, it } from "vitest";
 import { AxiosResponse } from 'axios';
 import { useQuery } from '@tanstack/react-query'
 
 import { TOKEN_KEY, SORT } from '../constants';
 import axios from "./rest";
-
 
 export interface Server {
     name: string;
@@ -15,7 +15,7 @@ type Data = Server[];
 
 const distanceDesc = (serverA: Server, serverB: Server) => serverA.distance - serverB.distance;
 const nameDescending = (serverA: Server, serverB: Server) => serverA.name.localeCompare(serverB.name);
-const swapParams = (fn: (a: Server, b: Server) => number) => (a: Server, b: Server) => fn(b, a);
+const swapParams = <T = unknown, R = unknown>(fn: (a: T, b: T) => R) => (a: T, b: T) => fn(b, a);
 
 export type ServerField = keyof Server;
 export interface SortAction {
@@ -35,12 +35,15 @@ export const useServersQuery = (sortAction?: SortAction) => {
             });
         }
     }, [sortAction]);
-
+    console.log("RENDER!");
     const select = useCallback(
         ({ data }: AxiosResponse<Data>): Data => {
+            console.log("SELECT!");
+
             const copy = [...data];
 
-            if (sorting.every(({ value }) => value === SORT.NONE)) {
+            if (sorting.length == 0 || sorting.every(({ value }) => value === SORT.NONE)) {
+                console.log('THAT!', data);
                 return data;
             }
 
@@ -52,6 +55,7 @@ export const useServersQuery = (sortAction?: SortAction) => {
                     copy.sort(value === SORT.ASC ? swapParams(distanceDesc) : distanceDesc);
                 }
             });
+            console.log('THIS!');
 
             return copy;
         }, [sorting]
@@ -66,3 +70,33 @@ export const useServersQuery = (sortAction?: SortAction) => {
         )
     });
 };
+
+it('sort descending distances', () => {
+    const unsorted = [
+        { name: "third", distance: 45 },
+        { name: "second", distance: 20 },
+        { name: "first", distance: 5 },
+    ];
+    const list = unsorted.sort(distanceDesc);
+
+    expect(list.map(({ name }) => name)).toEqual(["first","second","third"]);
+});
+
+it('sort descending names', () => {
+    const unsorted = [
+        { name: "Carlos", distance: 45 },
+        { name: "Anna", distance: 20 },
+        { name: "Bob", distance: 5 },
+    ];
+    const list = unsorted.sort(nameDescending);
+
+    expect(list.map(({ name }) => name)).toEqual(["Anna","Bob","Carlos"]);
+});
+
+it('swaps function parameters', () => {
+    const diff = (a: number, b: number) => a - b;
+
+    const swapped = swapParams(diff);
+
+    expect(swapped(4, 2)).toEqual(-2);
+});
