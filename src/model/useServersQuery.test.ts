@@ -1,13 +1,13 @@
-import { expect, it, describe, vi, afterAll, beforeAll } from "vitest";
+import { expect, it, describe, vi, beforeAll } from "vitest";
+import nock from 'nock'
 import { renderHook, waitFor } from '../testUtils';
 import { useServersQuery } from "./useServersQuery"
-import axios from "./rest";
+import axios, { API_URL } from "./rest";
 
 
 describe('useServersQuery', () => {
-    const getSpy = vi.spyOn(axios, 'get');
-
     beforeAll(() => {
+        axios.defaults.adapter = 'http';
         Object.defineProperty(window, "localStorage", {
             value: {
               getItem: vi.fn(() => "test"),
@@ -17,7 +17,9 @@ describe('useServersQuery', () => {
     });
 
     it('should query for servers as soon as it loads', async () => {
-        getSpy.mockResolvedValue({ data: [{ name: "test", distance: 1 }]});
+        const scope = nock(API_URL)
+        .get('/servers')
+        .reply(200, [{ name: "test", distance: 1 }]);
 
         const { result: { current } } = renderHook(() => useServersQuery());
 
@@ -25,11 +27,7 @@ describe('useServersQuery', () => {
        
         await waitFor(() => {
             return expect(current.isLoading).toBe(true);
-        });
-    });
-
-    afterAll(() => {
-        getSpy.mockRestore();
-        vi.useRealTimers();
+        }, { timeout: 5000 });
+        scope.done()
     });
 });

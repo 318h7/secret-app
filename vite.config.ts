@@ -7,6 +7,10 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), svgr()],
   test: {
+    setupFiles: ['./vitest-setup.ts'],
     environment: 'jsdom',
   },
+  define: { 
+    'import.meta.vitest': 'undefined', 
+  }, 
 })

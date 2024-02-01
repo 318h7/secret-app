@@ -13,7 +13,6 @@ const testClient = new QueryClient({
       staleTime: Infinity,
       structuralSharing: false,
       refetchOnWindowFocus: false,
-      // networkMode: 'offlineFirst'
     },
   },
 });
