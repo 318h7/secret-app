@@ -5,6 +5,7 @@ import nock from 'nock'
 import axios, { API_URL } from "../model/rest";
 import { render, screen, cleanup, waitFor } from '../testUtils';
 import { Login } from '.';
+import { TOKEN_KEY } from '../constants';
 
 describe('Login page', () => {
     beforeAll(() => {
@@ -27,10 +28,11 @@ describe('Login page', () => {
         );
     });
 
-    test('form error', async () => {
+    test('form present the returned error', async () => {
+        const ERROR = "Custom error";
         const scope = nock(API_URL)
         .post('/tokens')
-        .reply(401, { message: "Unauthorized" });
+        .reply(401, { message: ERROR });
 
         render(<Login />);
 
@@ -40,10 +42,30 @@ describe('Login page', () => {
         await userEvent.click(screen.getByTestId('submit-button'));
 
         await waitFor(
-            async () => expect(await screen.findByTestId('form-error')).toBeInTheDocument()
+            async () => expect(await screen.findByTestId('form-error')).toHaveTextContent(ERROR)
         );
         scope.done();
     });
+
+    test('stores token on success', async () => {
+        const scope = nock(API_URL)
+        .post('/tokens')
+        .reply(200, { token: "TestToken" });
+
+        render(<Login />);
+
+        await userEvent.type(screen.getByTestId('username-input'), "test");
+        await userEvent.type(screen.getByTestId('password-input'), "test");
+
+        await userEvent.click(screen.getByTestId('submit-button'));
+
+        await waitFor(
+            () => expect(localStorage.getItem(TOKEN_KEY)).toBe("TestToken")
+        );
+
+        scope.done();
+    });
+
 
     afterEach(cleanup)
 })
