@@ -24,6 +24,5 @@ locales are stored in the `./src/locales/`
 
 ## Extra
 * Create protected route
-* Add Error Boundary
 * Add e2e tests
 * Responsiveness

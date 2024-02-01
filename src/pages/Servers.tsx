@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "styled-components";
 
-import { Card, Table, Row, Column, HeaderCell } from "../components";
+import { Card, Table, Row, Column, HeaderCell, HeaderMenu } from "../components";
 import { useServersQuery } from "../model";
 import type { SortAction, ServerField } from "../model";
 import Loader from "../icons/loader.svg?react";
@@ -40,7 +40,9 @@ export const Servers = () => {
 
     return (
         <Card>
-            <h2>{t('servers.title')}</h2>
+            <HeaderMenu>
+                <h2>{t('servers.title')}</h2>
+            </HeaderMenu>
             <Table headers={[
                 <HeaderCell key="name" onSortingChanged={onSortingChanged("name")}>
                     {t('servers.table.name')}

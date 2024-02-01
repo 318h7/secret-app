@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { Container, FaceIcon } from "./ErrorBoundaryStyles";
+import { Container, FaceIcon } from "./styled";
 
 interface State {
     hasError: boolean;

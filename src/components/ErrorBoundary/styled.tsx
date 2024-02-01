@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Face from "../icons/face.svg?react";
+import Face from "../../icons/face.svg?react";
 
 export const Container = styled.div`
   background-color: ${({ theme: { colors } }) => colors.bg};

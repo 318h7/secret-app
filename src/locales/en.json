@@ -10,6 +10,9 @@
             "distance": "Distance"
         }
     },
+    "general": {
+        "logout": "Logout"
+    },
     "form": {
         "title": "Login",
         "username": "Username",
