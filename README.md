@@ -1,5 +1,5 @@
-# NordLayer interview task
-![master pipeline](https://github.com/318h7/nordlayer-app/actions/workflows/main.yml/badge.svg)
+# Secret company interview task
+![master pipeline](https://github.com/318h7/secret-app/actions/workflows/main.yml/badge.svg)
 
 ## React + TypeScript + Vite
 Based on the vite `react-ts` template
