@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import {render, renderHook, RenderHookOptions, RenderOptions} from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MemoryRouter } from 'react-router-dom'
 
 import "./i18n";
 import { ThemeProvider } from 'styled-components';
@@ -17,12 +18,19 @@ const testClient = new QueryClient({
   },
 });
 
-// eslint-disable-next-line react-refresh/only-export-components
-const TestProviders = ({children}: {children: React.ReactNode}) => {
+interface ProviderProps {
+  path?: string;
+  client?: QueryClient;
+}
+
+// eslint-disable-next-line react-refresh/only-export-components, react/display-name
+const getProviders = ({ path = "/", client = testClient }: ProviderProps) => ({children}: {children: React.ReactNode}) => {
   return (
     <ThemeProvider theme={theme}>
-      <QueryClientProvider client={testClient}>
+      <QueryClientProvider client={client}>
+        <MemoryRouter initialEntries={[path]}>
           {children}
+        </MemoryRouter>
       </QueryClientProvider>
     </ThemeProvider>
   )
@@ -31,12 +39,14 @@ const TestProviders = ({children}: {children: React.ReactNode}) => {
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, {wrapper: TestProviders, ...options})
+  path = "/",
+) => render(ui, {wrapper: getProviders({ path }), ...options})
 
 const customHookRender = <P extends object, R extends object>(
   hook: (props: P) => R,
   options?: Omit<RenderHookOptions<P>, 'wrapper'>,
-) => renderHook(hook, {wrapper: TestProviders, ...options})
+  client?: QueryClient,
+) => renderHook(hook, {wrapper: getProviders({ client }), ...options})
 
 // eslint-disable-next-line react-refresh/only-export-components
 export * from '@testing-library/react'

@@ -25,9 +25,7 @@ describe('useServersQuery', () => {
 
         expect(current.isLoading).toBe(true);
        
-        await waitFor(() => {
-            return expect(current.isLoading).toBe(true);
-        }, { timeout: 5000 });
+        await waitFor(() => expect(current.isLoading).toBe(true));
         scope.done()
     });
 });

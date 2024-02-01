@@ -65,6 +65,7 @@ export const Login =  () => {
                     <FormField error={formErrors?.username?.message}>
                         <Input
                             {...register("username", { required: t("form.errors.username") })}
+                            data-testid="username-input"
                             placeholder={t("form.username")}
                             $isError={Boolean(formErrors?.username)}
                         />
@@ -72,13 +73,14 @@ export const Login =  () => {
                     <FormField error={formErrors?.password?.message}>
                         <PasswordInput
                             {...register("password", { required: t("form.errors.password") })}
+                            data-testid="password-input"
                             placeholder={t("form.password")}
                             $isError={Boolean(formErrors?.password)}
                         />
                     </FormField>
-                    {errorMessage ? <Error>{errorMessage}</Error> : null}
+                    {errorMessage ? <Error data-testid="form-error">{errorMessage}</Error> : null}
                     <ButtonContainer>
-                        <Button type="submit">
+                        <Button data-testid="submit-button" type="submit">
                             {t("form.submit")}
                             {isPending ? <LoaderWithMargin height={24} width={24} /> : null}
                         </Button>

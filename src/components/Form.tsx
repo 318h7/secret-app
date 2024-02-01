@@ -14,7 +14,7 @@ export const Error = styled.div`
 export const FormField = ({ error, children }: FormFieldProps) => (
     <>
         {children}
-        <Error>{error}</Error>
+        <Error data-testid="field-error">{error}</Error>
     </>
 )
 FormField.displayName = 'FormField';
