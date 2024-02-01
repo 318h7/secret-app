@@ -23,6 +23,5 @@ Internationalization is supported via `i18-next`
 locales are stored in the `./src/locales/`
 
 ## Extra
-* Create protected route
 * Add e2e tests
 * Responsiveness
