@@ -27,7 +27,7 @@ describe('HeaderCell', () => {
     
         fireEvent.click(screen.getByTestId('sort-icon'));
 
-        expect(callback).toHaveBeenCalledWith(SORT.DESC);
+        expect(callback).toHaveBeenCalledWith(SORT.ASC);
     });
 
     afterEach(cleanup)

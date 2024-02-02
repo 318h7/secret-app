@@ -63,7 +63,7 @@ export const SortIcon = styled(Triangle)<{ $sort: SORT }>`
     cursor: pointer;
     fill: ${({ theme: { colors }, $sort }) => $sort === SORT.NONE ? colors.grey : colors.dark};
     margin-left: 0.5rem;
-    transform: ${({ $sort }) => $sort === SORT.ASC ? "rotate(180deg)" : "rotate(0deg)"};
+    transform: ${({ $sort }) => $sort === SORT.DESC ? "rotate(180deg)" : "rotate(0deg)"};
     transition: transform 0.3s ease-in-out;
 `;
 

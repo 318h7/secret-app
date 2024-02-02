@@ -26,9 +26,3 @@ locales are stored in the `./src/locales/`
 * Add more tests
 * Make components more reusable 
 * Improve the style system
-
-### Excuses excuses...
-I have faced an issue with the react-query and testing-library when
-the hook does not update it's state and never returns data.
-It looks like it's a recurring one, there are multiple tickets of the same thing for different versions 🙄 
-This has sucked some time so I decided to leave it for later and since you have asked to submit it ASAP and I was not able to use the full week as designed, I left this issue unresolved. But the idea was to test the hook in isolation with all the logic and do less checks in integration 🤷

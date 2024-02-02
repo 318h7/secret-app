@@ -10,11 +10,10 @@ export interface Server {
     distance: number;
 }
 
-type Data = Server[];
+export type ServersData = Server[];
 
-const distanceDesc = (serverA: Server, serverB: Server) => serverA.distance - serverB.distance;
-const nameDescending = (serverA: Server, serverB: Server) => serverA.name.localeCompare(serverB.name);
-const swapParams = <T = unknown, R = unknown>(fn: (a: T, b: T) => R) => (a: T, b: T) => fn(b, a);
+const distanceAscending = (serverA: Server, serverB: Server) => serverA.distance - serverB.distance;
+const nameDescending = (serverA: Server, serverB: Server) => serverB.name.localeCompare(serverA.name);
 
 export type ServerField = keyof Server;
 export interface SortAction {
@@ -24,7 +23,7 @@ export interface SortAction {
 
 export const useServersQuery = (sortAction?: SortAction) => {
     const [sorting, setSorting] = useState<SortAction[]>(sortAction ? [sortAction] : []);
-    
+
     useEffect(() => {
         if (sortAction) {
             setSorting((current) => {
@@ -36,7 +35,7 @@ export const useServersQuery = (sortAction?: SortAction) => {
     }, [sortAction]);
 
     const select = useCallback(
-        ({ data }: AxiosResponse<Data>): Data => {
+        ({ data }: AxiosResponse<ServersData>): ServersData => {
             const copy = [...data];
 
             if (sorting.length == 0 || sorting.every(({ value }) => value === SORT.NONE)) {
@@ -45,10 +44,16 @@ export const useServersQuery = (sortAction?: SortAction) => {
 
             sorting?.forEach(({ name, value }) => {
                 if (name === 'name' && value !== SORT.NONE) {
-                    copy.sort(value === SORT.ASC ? swapParams(nameDescending) : nameDescending);
+                    copy.sort(nameDescending);
+                    if (value === SORT.ASC) {
+                        copy.reverse();
+                    }
                 }
                 if (name === 'distance' && value !== SORT.NONE) {
-                    copy.sort(value === SORT.ASC ? swapParams(distanceDesc) : distanceDesc);
+                    copy.sort(distanceAscending);
+                    if (value === SORT.DESC) {
+                        copy.reverse();
+                    }
                 }
             });
             return copy;
@@ -88,13 +93,5 @@ if (import.meta.vitest) {
         const list = unsorted.sort(nameDescending);
 
         expect(list.map(({ name }) => name)).toEqual(["Anna","Bob","Carlos"]);
-    });
-
-    it('swaps function parameters', () => {
-        const diff = (a: number, b: number) => a - b;
-
-        const swapped = swapParams(diff);
-
-        expect(swapped(4, 2)).toEqual(-2);
     });
 }

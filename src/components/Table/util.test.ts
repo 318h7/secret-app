@@ -21,22 +21,22 @@ suite('getAlignment', () => {
 });
 
 suite('getNextSorting', () => {
-    test('DESC after NONE', () => {
-        expect(getNextSorting(SORT.NONE)).toBe(SORT.DESC)
+    test('ASC after NONE', () => {
+        expect(getNextSorting(SORT.NONE)).toBe(SORT.ASC)
     });
 
-    test('ASC after DESC', () => {
-        expect(getNextSorting(SORT.DESC)).toBe(SORT.ASC)
+    test('DESC after ASC', () => {
+        expect(getNextSorting(SORT.ASC)).toBe(SORT.DESC)
     });
 
-    test('NONE after ASC', () => {
-        expect(getNextSorting(SORT.ASC)).toBe(SORT.NONE)
+    test('NONE after DESC', () => {
+        expect(getNextSorting(SORT.DESC)).toBe(SORT.NONE)
     });
 
     test('cycle brings back', () => {
         let value = SORT.NONE;
         Array.from({ length: 3 }).forEach(() => {
-            value = getNextSorting(SORT.ASC);
+            value = getNextSorting(value);
         });
         expect(value).toBe(SORT.NONE)
     });
