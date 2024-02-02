@@ -12,8 +12,8 @@ export interface Server {
 
 export type ServersData = Server[];
 
-const distanceAscending = (serverA: Server, serverB: Server) => serverA.distance - serverB.distance;
-const nameDescending = (serverA: Server, serverB: Server) => serverB.name.localeCompare(serverA.name);
+export const distanceAscending = (serverA: Server, serverB: Server) => serverA.distance - serverB.distance;
+export const nameDescending = (serverA: Server, serverB: Server) => serverB.name.localeCompare(serverA.name);
 
 export type ServerField = keyof Server;
 export interface SortAction {
@@ -69,29 +69,3 @@ export const useServersQuery = (sortAction?: SortAction) => {
         )
     });
 };
-
-if (import.meta.vitest) {
-    const { it, expect } = import.meta.vitest
-
-    it('sort descending distances', () => {
-        const unsorted = [
-            { name: "third", distance: 45 },
-            { name: "second", distance: 20 },
-            { name: "first", distance: 5 },
-        ];
-        const list = unsorted.sort(distanceDesc);
-
-        expect(list.map(({ name }) => name)).toEqual(["first","second","third"]);
-    });
-
-    it('sort descending names', () => {
-        const unsorted = [
-            { name: "Carlos", distance: 45 },
-            { name: "Anna", distance: 20 },
-            { name: "Bob", distance: 5 },
-        ];
-        const list = unsorted.sort(nameDescending);
-
-        expect(list.map(({ name }) => name)).toEqual(["Anna","Bob","Carlos"]);
-    });
-}

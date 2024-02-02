@@ -3,7 +3,7 @@ import nock from 'nock'
 import type { UseQueryResult } from "@tanstack/react-query";
 
 import { renderHook, act, waitFor, cleanup, configure } from '../testUtils';
-import { useServersQuery } from "./useServersQuery"
+import { distanceAscending, nameDescending, useServersQuery } from "./useServersQuery"
 import type { Server, ServersData, SortAction } from "./useServersQuery"
 import axios, { API_URL } from "./rest";
 import { SORT } from "../constants";
@@ -157,5 +157,30 @@ describe('useServersQuery', () => {
         expect(result.current.data?.map(getDistances)).toStrictEqual([3, 2, 1, 4, 1, 5, 1]);
 
         scope.done()
+    });
+});
+
+
+describe("utils", () => {
+    it('sort descending distances', () => {
+        const unsorted = [
+            { name: "third", distance: 45 },
+            { name: "second", distance: 20 },
+            { name: "first", distance: 5 },
+        ];
+        const list = unsorted.sort(distanceAscending);
+
+        expect(list.map(({ name }) => name)).toEqual(["first","second","third"]);
+    });
+
+    it('sort descending names', () => {
+        const unsorted = [
+            { name: "Carlos", distance: 45 },
+            { name: "Anna", distance: 20 },
+            { name: "Bob", distance: 5 },
+        ];
+        const list = unsorted.sort(nameDescending);
+
+        expect(list.map(({ name }) => name)).toEqual(["Carlos", "Bob", "Anna"]);
     });
 });
