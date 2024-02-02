@@ -28,7 +28,7 @@ describe('Login page', () => {
         );
     });
 
-    test('form present the returned error', async () => {
+    test('login error', async () => {
         const ERROR = "Custom error";
         const scope = nock(API_URL)
         .post('/tokens')
@@ -47,7 +47,7 @@ describe('Login page', () => {
         scope.done();
     });
 
-    test('stores token on success', async () => {
+    test('login success', async () => {
         const scope = nock(API_URL)
         .post('/tokens')
         .reply(200, { token: "TestToken" });

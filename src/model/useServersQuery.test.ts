@@ -4,7 +4,6 @@ import { renderHook, waitFor } from '../testUtils';
 import { useServersQuery } from "./useServersQuery"
 import axios, { API_URL } from "./rest";
 
-
 describe('useServersQuery', () => {
     beforeAll(() => {
         axios.defaults.adapter = 'http';

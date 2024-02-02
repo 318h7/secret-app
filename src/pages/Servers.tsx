@@ -61,17 +61,29 @@ export const Servers = () => {
                 <h2>{t('servers.title')}</h2>
             </HeaderMenu>
             <Table headers={[
-                <AdaptiveHeader $w={60} key="name" onSortingChanged={onSortingChanged("name")}>
+                <AdaptiveHeader
+                    $w={60}
+                    key="name"
+                    onSortingChanged={onSortingChanged("name")}
+                >
                     {t('servers.table.name')}
                 </AdaptiveHeader>,
-                <AdaptiveHeader $w={40} key="distance" onSortingChanged={onSortingChanged("distance")}>
+                <AdaptiveHeader
+                    $w={40}
+                    key="distance"
+                    onSortingChanged={onSortingChanged("distance")}
+                >
                     {t('servers.table.distance')}
                 </AdaptiveHeader>
             ]}>
                 {data?.map(({  name, distance }, index) => (
                     <Row key={index}>
-                        <AdaptiveColumn $w={60} $right>{name}</AdaptiveColumn>
-                        <AdaptiveColumn $w={40} $left>{distance}</AdaptiveColumn>
+                        <AdaptiveColumn $w={60} $right>
+                            {name}
+                        </AdaptiveColumn>
+                        <AdaptiveColumn $w={40} $left>
+                            {distance}
+                        </AdaptiveColumn>
                     </Row>
                 ))}
                 <NoDataRow isEmpty={isEmpty} isLoading={isLoading} />

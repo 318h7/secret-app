@@ -40,7 +40,7 @@ export const Header = styled.div`
     }
 `;
 
-export const Column = styled.div<{ $left?: boolean, $right?: boolean }>`
+export const Column = styled.div.attrs(() => ({ role: "cell" }))<{ $left?: boolean, $right?: boolean }>`
     display: flex;
     justify-content: ${({ $left, $right }) => getAlignment($left, $right)};
     align-items: center;
@@ -67,7 +67,7 @@ export const SortIcon = styled(Triangle)<{ $sort: SORT }>`
     transition: transform 0.3s ease-in-out;
 `;
 
-export const Row = styled.div`
+export const Row = styled.div.attrs(() => ({ role: "row" }))`
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

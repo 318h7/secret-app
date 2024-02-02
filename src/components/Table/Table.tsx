@@ -19,7 +19,7 @@ export const HeaderCell = ({ children, onSortingChanged, ...rest }: HeaderCellPr
     };
 
     return (
-        <HColumn data-testid="header-column" {...rest}>
+        <HColumn role="columnheader" data-testid="header-column" {...rest}>
             {children}
             {isSortable ? <SortIcon data-testid="sort-icon" $sort={sorting} onClick={toggleNameSorting} /> : null}
         </HColumn>
@@ -33,7 +33,7 @@ interface TableProps {
 
 export const Table = ({ headers, children }: TableProps) => {
     return (
-        <TableContainer data-testid="table">
+        <TableContainer role="table">
             <Header>{headers}</Header>
             {children}
         </TableContainer>
