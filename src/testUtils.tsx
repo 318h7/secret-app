@@ -7,7 +7,7 @@ import "./i18n";
 import { ThemeProvider } from 'styled-components';
 import { theme } from './styles';
 
-const testClient = new QueryClient({
+const CLIENT_OPTIONS = {
   defaultOptions: {
     queries: {
       retry: false,
@@ -15,18 +15,16 @@ const testClient = new QueryClient({
       structuralSharing: false,
       refetchOnWindowFocus: false,
     },
-  },
-});
+  }
+};
 
-interface ProviderProps {
-  client?: QueryClient;
-}
+const getFreshClient = () => new QueryClient(CLIENT_OPTIONS);
 
-// eslint-disable-next-line react/display-name
-const getProviders = ({ client = testClient }: ProviderProps) => ({children}: {children: React.ReactNode}) => {
+// eslint-disable-next-line react-refresh/only-export-components
+const Providers = ({children}: {children: React.ReactNode}) => {
   return (
     <ThemeProvider theme={theme}>
-      <QueryClientProvider client={client}>
+      <QueryClientProvider client={getFreshClient()}>
         <BrowserRouter>
           {children}
         </BrowserRouter>
@@ -38,14 +36,12 @@ const getProviders = ({ client = testClient }: ProviderProps) => ({children}: {c
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>,
-  path = "/",
-) => render(ui, {wrapper: getProviders({ path }), ...options})
+) => render(ui, {wrapper: Providers, ...options})
 
 const customHookRender = <P extends object, R extends object>(
   hook: (props: P) => R,
   options?: Omit<RenderHookOptions<P>, 'wrapper'>,
-  client?: QueryClient,
-) => renderHook(hook, {wrapper: getProviders({ client }), ...options})
+) => renderHook(hook, {wrapper: Providers, ...options})
 
 // eslint-disable-next-line react-refresh/only-export-components
 export * from '@testing-library/react'
